@@ -3,15 +3,15 @@ import './style.css'
 import App from './App.vue'
 import router from './router'
 import ElementPlus from 'element-plus'
-import axios from 'axios'
-import config from './config'
+import request from './utils/request'
+import storage from './utils/storage'
 
-console.log(import.meta.env);
-axios.get(config.mockApi + '/login').then((res) => {
-  console.log(res);
-})
+// console.log(config);
 
 const app = createApp(App)
+// 全局挂载变量
+app.config.globalProperties.$request = request
+app.config.globalProperties.$storage = storage
 app.use(router)
 app.use(ElementPlus)
 

@@ -3,10 +3,10 @@
  */
 
 // 获取当前环境
-const env = import.meta.env.MODE || 'prod'
+const env = import.meta.env.MODE || 'prod' || 'test'
 // 环境配置
 const EnvConfig = {
-  dev: {
+  development: {
     // 开发环境
     baseApi: '/',
     mockApi: 'https://www.fastmock.site/mock/be039def071dd621fc98189517d1f72e/api'
@@ -16,7 +16,7 @@ const EnvConfig = {
     baseApi: '/',
     mockApi: 'https://www.fastmock.site/mock/be039def071dd621fc98189517d1f72e/api'
   },
-  production: {
+  prod: {
     // 生产环境
     baseApi: '/',
     mockApi: 'https://www.fastmock.site/mock/be039def071dd621fc98189517d1f72e/api'
@@ -25,5 +25,6 @@ const EnvConfig = {
 export default {
   env,
   mock: true,
+  namespace: 'warehouse_management',
   ...EnvConfig[env]
 }
