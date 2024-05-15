@@ -3,7 +3,7 @@ import { onMounted } from 'vue';
 import { getCurrentInstance } from 'vue'
 const { proxy } = getCurrentInstance()
 onMounted(() => {
-  proxy.$storage.setItem('name', 'tome')
+  // proxy.$storage.setItem('name', 'tome')
 
 })
 </script>
@@ -12,5 +12,8 @@ onMounted(() => {
   <router-view></router-view>
 </template>
 
-<style scoped>
+<style>
+@import url("./assets/styles/index.scss");
+@import url("./assets/styles/reset.css");
+@import url("./assets/font/iconfont.css");
 </style>

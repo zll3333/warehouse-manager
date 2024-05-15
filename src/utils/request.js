@@ -5,6 +5,7 @@ import axios from 'axios';
 import config from '../config';
 import { ElMessage } from 'element-plus';
 import router from '../router';
+import storage from '../utils/storage'
 
 const TOKEN_INVALID = 'Token认证失败，请重新登录'
 const NETWORK_ERROR = '网络请求异常，请稍后重试'
@@ -18,7 +19,12 @@ const instance = axios.create({
 instance.interceptors.request.use((req) => {
   // 在请求头headers动态添加Authorization
   const headers = req.headers
-  if (!headers.Authorization) headers.Authorization = 'Bear jack'
+  const token = storage.getItem('token')
+  if (!headers.Authorization) {
+    headers.Authorization = 'Bearer ' + token
+  } else {
+    router.login('/login')
+  }
   return req
 })
 
@@ -28,13 +34,14 @@ instance.interceptors.response.use((res) => {
   if (code === 200) {
     // 成功
     return data
-  } else if (code === 40001) {
+  } else if (code === 50001) {
     // 登录过期（失效）
     ElMessage.error(TOKEN_INVALID)
+    storage.clearItem('userInfo')
     // 跳转到登录页
     setTimeout(() => {
       router.push('/login')
-    }, 5000)
+    }, 500)
     // 控制台抛出异常
     return Promise.reject(TOKEN_INVALID)
   } else {
